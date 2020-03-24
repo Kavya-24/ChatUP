@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "240375699219",
+    "firebase_url": "https://chatup-72dc2.firebaseio.com",
+    "project_id": "chatup-72dc2",
+    "storage_bucket": "chatup-72dc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240375699219:android:b222742071910b1ebd2ce6",
+        "android_client_info": {
+          "package_name": "com.example.chatup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240375699219-vj0pevkhhemed845mfv97q02cp5s0s2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGJRYo4bD1Y-KgWY0JXVHFwsDvpaW6C2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240375699219-vj0pevkhhemed845mfv97q02cp5s0s2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
