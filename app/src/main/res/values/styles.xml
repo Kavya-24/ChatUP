@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SplashScreen" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:background">@drawable/m</item>
+    </style>
+
 </resources>

@@ -92,6 +92,9 @@ dependencies {
     //kotlin annotation processor
     apply plugin: 'kotlin-kapt'
 
+    //Google services plugIn
+    apply plugin: 'com.google.gms.google-services'
+
     //This is necessaey because we are using Anko Coroutines
     kotlin {
         experimental {
