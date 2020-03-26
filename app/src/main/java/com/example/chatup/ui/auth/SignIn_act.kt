@@ -2,24 +2,22 @@ package com.example.chatup.ui.auth
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.chatup.MainActivity
 import com.example.chatup.R
+import com.example.chatup.Utils.FirestoreUtil
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_sign_in_act.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.design.longSnackbar
 
 class SignIn_act : AppCompatActivity() {
 
 
-    private val RC_code =1
+    private val RC_code = 1
+
     //private val signInProviders= listOf(Auth)
     //email authentication
     private val signInProviders =
@@ -27,29 +25,30 @@ class SignIn_act : AppCompatActivity() {
             AuthUI.IdpConfig.EmailBuilder()
                 .setAllowNewAccounts(true)
                 .setRequireName(true)
-                .build())
+                .build()
+        )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_act)
 
-        val b : Button = findViewById(R.id.account_sign_in)
-        b.setOnClickListener{
+        val b: Button = findViewById(R.id.account_sign_in)
+        b.setOnClickListener {
 
-            val i = AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(signInProviders).build()
+            val i = AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(signInProviders).build()
 
             startActivityForResult(i, RC_code)
+        }
+
+
     }
-
-
-
-}
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == RC_code ) {
+        if (requestCode == RC_code) {
             //When the access code is correct
             val response = IdpResponse.fromResultIntent(data)
 
@@ -57,14 +56,17 @@ class SignIn_act : AppCompatActivity() {
                 //Get a toast that the account will be set.
                 //Toast.makeText(this, "Setting up your account", Toast.LENGTH_SHORT).show()
                 //Initializ current user in firebase
-                val progressDialog = indeterminateProgressDialog ( "Setting up yur account" )
+                val progressDialog = indeterminateProgressDialog("Setting up your account")
                 //Start activity to the main activity now.
                 //intentFor is of Anko
                 //NewTask(), clearTask() : Flags so that we can not go back to signUp Screen
-                startActivity(intentFor<MainActivity>().newTask().clearTask())
-                //TODO : What will happen when this is clicked
-                progressDialog.dismiss()
-                //This is going to dismiss it for the next time
+                FirestoreUtil.initCurrentUserIfFirstTime {
+                    startActivity(intentFor<MainActivity>().newTask().clearTask())
+                    //TODO : What will happen when this is clicked
+                    progressDialog.dismiss()
+                    //This is going to dismiss it for the next time
+
+                }
                 //
 
                 //If the details are correct and we ask the user to save the information in thje dialog box
@@ -85,21 +87,19 @@ class SignIn_act : AppCompatActivity() {
                 //   startActivity(intentFor<MainActivity>(),)
 
 
-            }
-
-            else if (resultCode == Activity.RESULT_CANCELED){
-                if(response == null){
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                if (response == null) {
                     //When there is nothing, return else display the error when the activity is cancelled
                     return
                 }
 
                 // "?." is the safe access operator. If the value is null, it ignores everything after it
-                when(response.error?.errorCode){
+                when (response.error?.errorCode) {
                     ErrorCodes.NO_NETWORK -> longToast("No network connection, please try again later")
                     ErrorCodes.DEVELOPER_ERROR -> longToast("Developer Error")
                     ErrorCodes.UNKNOWN_ERROR -> longToast("Unknown error occurred")
                     //Check anko dependencies for the below
-                   // ErrorCodes.PROVIDER_ERROR -> longSnackbar(layout_signIn,"Provider Error")
+                    // ErrorCodes.PROVIDER_ERROR -> longSnackbar(layout_signIn,"Provider Error")
                     //Layout_signIn is the id of the constraint
                 }
             }
