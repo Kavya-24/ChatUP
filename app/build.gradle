@@ -1,3 +1,6 @@
+// Apply the Crashlytics Gradle plugin
+//apply plugin: 'com.google.firebase.crashlytics'
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -112,6 +115,12 @@ dependencies {
     //kotlin annotation processor
     //For the latest version of Glide
     apply plugin: 'kotlin-kapt'
+    //Dependencies for using CrashLytics
+    // Recommended: Add the Firebase SDK for Google Analytics.
+    implementation 'com.google.firebase:firebase-analytics:17.2.3'
+
+    // Add the Firebase SDK for Crashlytics.
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta02'
 
     //This is necessaey because we are using Anko Coroutines
     kotlin {
