@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.chatup.R
 import com.example.chatup.Utils.FirestoreUtil
@@ -78,6 +79,10 @@ class Profile : Fragment() {
                     )
 
                 }
+
+                //Toast in Anko
+                Toast.makeText(context, "Updating profile", Toast.LENGTH_SHORT).show()
+
             }
 
             //SignOut Button

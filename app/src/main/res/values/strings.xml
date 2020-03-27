@@ -15,4 +15,7 @@
     <string name="my_name">My name</string>
     <string name="my_bio">My Bio</string>
     <string name="continue_sign_in">Continue Sign In</string>
+    <string name="name">Name</string>
+    <string name="bio">Bio</string>
+    <string name="lets_start">Let\'s Start</string>
 </resources>

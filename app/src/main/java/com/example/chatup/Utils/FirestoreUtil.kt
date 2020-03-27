@@ -1,9 +1,14 @@
 package com.example.chatup.Utils
 
+import android.content.Context
+import android.util.Log
 import com.example.chatup.model.User
+import com.example.chatup.recyclerView_item.PersonItemUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.xwray.groupie.kotlinandroidextensions.Item
 
 object FirestoreUtil {
     //Lazy Initialization :lazy() is a function that takes a lambda and returns an instance of Lazy<T>
@@ -19,7 +24,7 @@ object FirestoreUtil {
     //This comprises of docs and collections. data>docs>collection Each user has its own document
     private val currentUserDocRef: DocumentReference
         get() = firestoreInstance.document(
-            "users/${FirebaseAuth.getInstance().uid ?: throw NullPointerException(
+            "users/${FirebaseAuth.getInstance().currentUser?.uid ?: throw NullPointerException(
                 "UID Not found"
             )}"
         )
@@ -63,5 +68,37 @@ object FirestoreUtil {
             it.toObject(User::class.java)?.let { it1 -> onComplete(it1) }
         }
     }
+
+    //A fucntion to update the list of users
+    fun addUsersListener(context: Context, onListen: (List<Item>) -> Unit): ListenerRegistration {
+
+        return firestoreInstance.collection("users")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.e("Firestore", "User Listener Error", firebaseFirestoreException)
+                    return@addSnapshotListener
+                }
+
+                //Or else, create a mutable list of the users
+                val items = mutableListOf<Item>()
+                //Get the documents for the particu;ar user
+                querySnapshot?.documents?.forEach {
+                    //We come to the currently signed user
+                    //'it' is the doc snapshot, we ll filter the user that we want
+                    if (it.id != FirebaseAuth.getInstance().currentUser?.uid) {
+                        // This is not the person who is signed in, we show it in the list
+                        it.toObject(User::class.java)
+                            ?.let { it1 -> PersonItemUser(it1, it.id, context) }?.let { it2 ->
+                            items.add(it2)
+                        }
+
+                    }
+                }
+                onListen(items)
+
+            }
+    }
+
+    fun removeListener(registration: ListenerRegistration) = registration.remove()
 
 }

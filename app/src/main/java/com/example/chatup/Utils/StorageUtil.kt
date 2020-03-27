@@ -11,7 +11,8 @@ object StorageUtil {
     private val cureentUserRef: StorageReference
         //read only property
         get() = storageInstance.reference.child(
-            FirebaseAuth.getInstance().uid ?: throw  NullPointerException("UId is null")
+            FirebaseAuth.getInstance().currentUser?.uid
+                ?: throw  NullPointerException("UId is null")
         )
 
     //We ll create a fucntion uploadProfilePicture , takes inputof image array and higher order function onSuccess

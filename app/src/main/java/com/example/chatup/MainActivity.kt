@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.chatup.Fragment.People
 import com.example.chatup.Fragment.Profile
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,12 +15,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Parameters
+        //To make this the default fragment
+        replaceFragment(People())
 
         nav_view.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_all_people -> {
                     //TODO: Show all ppl fragment
                     // replaceFragment()
+                    replaceFragment(People())
                     true
 
                 }
