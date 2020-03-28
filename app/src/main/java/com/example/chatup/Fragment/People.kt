@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.chatup.AppCOnstants
 import com.example.chatup.R
 import com.example.chatup.Utils.FirestoreUtil
 import com.example.chatup.recyclerView_item.PersonItemUser
@@ -90,8 +89,12 @@ class People : Fragment() {
 //                AppCOnstants.USER_NAME to item.person.name,
 //                AppCOnstants.USER_ID to item.userId
 //            )
-            val user_name = AppCOnstants.USER_NAME to item.person.name
-            val userid = AppCOnstants.USER_ID to item.userId
+//            val user_name = AppCOnstants.USER_NAME to item.person.name
+//            val userid = AppCOnstants.USER_ID to item.userId
+
+            val user_name = item.person.name
+            val userid = item.userId
+
             val i = Intent(context, Chat::class.java)
             i.putExtra("user_name",user_name)
             i.putExtra("userid",userid)
