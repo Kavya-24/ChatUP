@@ -2,10 +2,7 @@ package com.example.chatup.Utils
 
 import android.content.Context
 import android.util.Log
-import com.example.chatup.model.ChatChannel
-import com.example.chatup.model.MessageType
-import com.example.chatup.model.TextMessage
-import com.example.chatup.model.User
+import com.example.chatup.model.*
 import com.example.chatup.recyclerView_item.PersonItemUser
 import com.example.chatup.recyclerView_item.TextmsgItem
 import com.google.firebase.auth.FirebaseAuth
@@ -13,7 +10,6 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlin.reflect.KFunction0
 
 object FirestoreUtil {
     //Lazy Initialization :lazy() is a function that takes a lambda and returns an instance of Lazy<T>
@@ -167,6 +163,14 @@ object FirestoreUtil {
 
             }
     }
+
+
+    fun sendMessgae(message: Message, channelId: String) {
+
+        chatChannelCollectionRef.document(channelId).collection("messages").add(message)
+
+    }
+
 
 
 }

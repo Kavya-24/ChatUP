@@ -137,7 +137,7 @@ class Profile : Fragment() {
                 if (!pictureJustChanged && user.profilePicture != null) {
 
                     GlideApp.with(this).load(StorageUtil.pathToRef(user.profilePicture))
-                        .placeholder(R.drawable.ic_home_black_24dp).into(imageView_profile_picture)
+                        .placeholder(R.drawable.smile).into(imageView_profile_picture)
 
                 }
             }
