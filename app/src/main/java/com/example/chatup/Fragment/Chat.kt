@@ -19,16 +19,21 @@ class Chat : AppCompatActivity() {
         setContentView(R.layout.activity_chat)
         //To get the arrow to find its way back to main activity
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = intent.getStringExtra(AppCOnstants.USER_NAME)
+        supportActionBar?.title = intent.getStringExtra("user_name")
 
 
-        val otherUsrId = intent.getStringExtra(AppCOnstants.USER_ID)
+        val otherUsrId = intent.getStringExtra("userid")
 
+        if(otherUsrId != null){
         FirestoreUtil.getChatChannel(otherUsrId) { channelId ->
             //This loads all the functions
             messagesListenerRegistration =
                 FirestoreUtil.addChatMessagesListener(channelId, this, this::onMessagesChange)
-        }
+        }}
+
+//        else {
+//            otherUsrId= 1
+//        }
     }
 
     private fun onMessagesChange(message : List<Item>) {

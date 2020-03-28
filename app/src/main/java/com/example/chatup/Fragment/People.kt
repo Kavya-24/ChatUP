@@ -90,9 +90,15 @@ class People : Fragment() {
 //                AppCOnstants.USER_NAME to item.person.name,
 //                AppCOnstants.USER_ID to item.userId
 //            )
+            val user_name = AppCOnstants.USER_NAME to item.person.name
+            val userid = AppCOnstants.USER_ID to item.userId
             val i = Intent(context, Chat::class.java)
-            i.putExtra(AppCOnstants.USER_NAME,AppCOnstants.USER_ID)
-
+            i.putExtra("user_name",user_name)
+            i.putExtra("userid",userid)
+            startActivity(i)
+            //i.putStringExtra("USERNAME,user_name)
+//            startActivity(i)
+           // startActivity(Chat::class.java,user_name,userid)
         }
     }
 
