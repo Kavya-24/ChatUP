@@ -1,15 +1,19 @@
 package com.example.chatup.Fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.chatup.AppCOnstants
 import com.example.chatup.R
 import com.example.chatup.Utils.FirestoreUtil
+import com.example.chatup.recyclerView_item.PersonItemUser
 import com.google.firebase.firestore.ListenerRegistration
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
@@ -40,6 +44,7 @@ class People : Fragment() {
         userListener = FirestoreUtil.addUsersListener(this.activity!!, this::updateRvItems)
 
 
+
         return r
     }
 
@@ -59,6 +64,7 @@ class People : Fragment() {
                     peopleSection = Section(items)
                     //Attach it to the adapter
                     add(peopleSection)
+                    setOnItemClickListener(onItemClick)
                 }
             }
             initRv = false
@@ -66,9 +72,7 @@ class People : Fragment() {
         }
 
         //This is for updtae
-        fun update() {
-
-        }
+        fun update() = peopleSection.update(items)
 
         if (initRv) {
             //We need to initialize
@@ -77,6 +81,19 @@ class People : Fragment() {
             update()
         }
 
+    }
+
+
+    private val onItemClick = OnItemClickListener { item, view ->
+        if (item is PersonItemUser) {
+//            startActivity<Chat>(
+//                AppCOnstants.USER_NAME to item.person.name,
+//                AppCOnstants.USER_ID to item.userId
+//            )
+            val i = Intent(context, Chat::class.java)
+            i.putExtra(AppCOnstants.USER_NAME,AppCOnstants.USER_ID)
+
+        }
     }
 
 
