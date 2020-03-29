@@ -7,5 +7,8 @@ class TextMessage(val text : String, override val time : Date, override val send
     //Initialize an empty constructor for this
     constructor() : this("",Date(0),"")
 
+    //Constructor value:
+
+
 
 }
