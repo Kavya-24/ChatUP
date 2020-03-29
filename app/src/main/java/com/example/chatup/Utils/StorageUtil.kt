@@ -31,5 +31,16 @@ object StorageUtil {
 
     //We return this funtion with the equlas
     fun pathToRef(path: String) = storageInstance.getReference(path)
+    fun uploadMessageImage(imageByte: ByteArray, onSuccess: (imagePath: String) -> Unit) {
+        //Unit is returning void
+        //Now we ll create a location (called reference) to store the image bytes
+        val ref = cureentUserRef.child("messages/${UUID.nameUUIDFromBytes(imageByte)}")
+        //We always need to create a ew file so as to avoid image caching. We craete unique names in the UUID class by the bytes everytime
+        ref.putBytes(imageByte).addOnSuccessListener {
+            onSuccess(ref.path)
+            //This path will be stored on the firestore
+        }
+
+    }
 
 }

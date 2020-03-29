@@ -3,6 +3,7 @@ package com.example.chatup.Utils
 import android.content.Context
 import android.util.Log
 import com.example.chatup.model.*
+import com.example.chatup.recyclerView_item.ImageMsgItem
 import com.example.chatup.recyclerView_item.PersonItemUser
 import com.example.chatup.recyclerView_item.TextmsgItem
 import com.google.firebase.auth.FirebaseAuth
@@ -110,6 +111,7 @@ object FirestoreUtil {
     fun getChatChannel(otherUserId: String, onComplete: (channelId: String) -> Unit) {
         //Each chat has a separte channel which need to be engaged
         //We ll get a reference to that channel for that user
+
         currentUserDocRef.collection("engagedChatChannels").document(otherUserId).get()
             .addOnSuccessListener {
                 //If the document snapshot exists, ("it" exists), then wee are already chatting
@@ -156,7 +158,7 @@ object FirestoreUtil {
                     if (it["type"] == MessageType.TXT)
                         items.add(TextmsgItem(it.toObject(TextMessage::class.java)!!, context))
                     else
-                    //    items.add(ImageMessageItem(it.toObject(ImageMessage::class.java)!!, context))
+                        items.add(ImageMsgItem(it.toObject(ImageMessage::class.java)!!, context))
                         return@forEach
                 }
                     onListen(items)
